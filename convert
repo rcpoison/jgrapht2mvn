@@ -1,0 +1,64 @@
+#!/bin/bash 
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# cleanup previous attempt
+if [ -d jgrapht ]; then
+	rm -rf jgrapht
+fi
+
+# git checkout
+git svn clone \
+	--stdlayout \
+	--authors-file=svn-authors \
+	--ignore-paths '.*\.(jar)$|CVSROOT|web\/|lib\/' \
+	https://jgrapht.svn.sourceforge.net/svnroot/jgrapht
+
+(
+	cd jgrapht
+	cp "${DIR}"/gitignore .gitignore
+	git add .
+	git commit -m "add .gitignore"
+	
+	git gc --aggressive --prune=now
+)
+
+# convert to maven project
+(
+	cd jgrapht
+	git checkout -b feature/maven
+	
+	# layout
+	mkdir -pv jgrapht-{core,ext,touchgraph}/src/{main,test}/{java,resources}
+	mkdir -pv jgrapht-{ext,touchgraph}/src/{main,test}/java/org/jgrapht
+	mkdir -pv jgrapht-touchgraph/src/{main,test}/java/org/jgrapht/experimental
+	
+	# ext
+	mv -v src/org/jgrapht/ext jgrapht-ext/src/main/java/org/jgrapht
+	mv -v testsrc/org/jgrapht/ext jgrapht-ext/src/test/java/org/jgrapht
+	
+	# touchgraph
+	mv -v src/org/jgrapht/experimental/touchgraph jgrapht-ext/src/main/java/org/jgrapht/experimental
+	mv -v testsrc/org/jgrapht/experimental/touchgraph jgrapht-ext/src/test/java/org/jgrapht/experimental
+	
+	# core
+	mv -v src/org src/overview.html jgrapht-core/src/main/java
+	mv -v testsrc/org jgrapht-core/src/test/java
+	mv -v META-INF jgrapht-core/src/main/resources
+	rmdir -v testsrc
+	
+	# delete ant stuff
+	rm -v build.xml build.properties 
+	
+	# poms
+	cp -v "${DIR}"/pom.xml .
+	for module in core ext touchgraph; do 
+		cp -v "${DIR}"/pom-$module.xml jgrapht-$module/
+	done
+	
+	# commit!
+	git add .
+	git diff --name-only --diff-filter=D -z | xargs -0 git rm --cached
+	git commit -m "convert to maven"
+)
+
