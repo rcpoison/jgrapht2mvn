@@ -10,7 +10,7 @@ fi
 # git checkout
 git svn clone \
 	--stdlayout \
-	--authors-file=svn-authors \
+	--authors-file="${DIR}"/svn-authors \
 	--ignore-paths '.*\.(jar)$|CVSROOT|web\/|lib\/' \
 	https://jgrapht.svn.sourceforge.net/svnroot/jgrapht
 
