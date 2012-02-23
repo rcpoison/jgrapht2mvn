@@ -18,6 +18,8 @@
 *Kopie*
 nbproject/private
 one-jar
+target
+build
 .cache
 .settings
 .project

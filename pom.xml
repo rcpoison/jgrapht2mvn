@@ -149,6 +149,7 @@
 	<modules>
 		<module>jgrapht-core</module>
 		<module>jgrapht-ext</module>
+		<module>jgrapht-demo</module>
 		<!--<module>jgrapht-touchgraph</module>-->
 	</modules>
 	

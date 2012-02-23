@@ -23,37 +23,39 @@ git svn clone \
 	git gc --aggressive --prune=now
 )
 
+[ ! -d jgrapht ] && exit 1
+
 # convert to maven project
 (
 	cd jgrapht
 	git checkout -b feature/maven
 	
 	# layout
-	mkdir -pv jgrapht-{core,ext,touchgraph}/src/{main,test}/{java,resources}
-	mkdir -pv jgrapht-{ext,touchgraph}/src/{main,test}/java/org/jgrapht
+	mkdir -pv jgrapht-{core,ext,touchgraph,demo}/src/{main,test}/{java,resources}
+	mkdir -pv jgrapht-{ext,touchgraph,demo}/src/{main,test}/java/org/jgrapht
 	mkdir -pv jgrapht-touchgraph/src/{main,test}/java/org/jgrapht/experimental
 	
 	# ext
 	mv -v src/org/jgrapht/ext jgrapht-ext/src/main/java/org/jgrapht
 	mv -v testsrc/org/jgrapht/ext jgrapht-ext/src/test/java/org/jgrapht
-	
 	# touchgraph
-	mv -v src/org/jgrapht/experimental/touchgraph jgrapht-ext/src/main/java/org/jgrapht/experimental
-	mv -v testsrc/org/jgrapht/experimental/touchgraph jgrapht-ext/src/test/java/org/jgrapht/experimental
-	
+	mv -v src/org/jgrapht/experimental/touchgraph jgrapht-touchgraph/src/main/java/org/jgrapht/experimental
+	mv -v testsrc/org/jgrapht/experimental/touchgraph jgrapht-touchgraph/src/test/java/org/jgrapht/experimental
+	# demo
+	mv -v src/org/jgrapht/demo jgrapht-demo/src/main/java/org/jgrapht
 	# core
 	mv -v src/org src/overview.html jgrapht-core/src/main/java
 	mv -v testsrc/org jgrapht-core/src/test/java
 	mv -v META-INF jgrapht-core/src/main/resources
-	rmdir -v testsrc
+	rmdir -v testsrc src
 	
 	# delete ant stuff
 	rm -v build.xml build.properties 
 	
 	# poms
 	cp -v "${DIR}"/pom.xml .
-	for module in core ext touchgraph; do 
-		cp -v "${DIR}"/pom-$module.xml jgrapht-$module/
+	for module in core ext touchgraph demo; do 
+		cp -v "${DIR}"/pom-$module.xml jgrapht-$module/pom.xml
 	done
 	
 	# commit!
