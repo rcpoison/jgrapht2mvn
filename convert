@@ -16,6 +16,10 @@ git svn clone \
 
 (
 	cd jgrapht
+	
+	#git config user.name poison
+	#git config user.email rc.poison@gmail.com
+	
 	cp "${DIR}"/gitignore .gitignore
 	git add .
 	git commit -m "add .gitignore"
@@ -23,7 +27,7 @@ git svn clone \
 	git gc --aggressive --prune=now
 )
 
-[ ! -d jgrapht ] && exit 1
+[ -d jgrapht ] || exit 1
 
 # convert to maven project
 (
