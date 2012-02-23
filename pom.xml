@@ -8,10 +8,6 @@
 	<version>0.8.3-SNAPSHOT</version>
 	<description>A Java class library for graph-theory data structures and algorithms.</description>
 	<url>http://www.jgrapht.org</url>
-	<scm>
-		<url>http://jgrapht.svn.sourceforge.net/svnroot/jgrapht/trunk</url>
-		<connection>scm:svn:https://jgrapht.svn.sourceforge.net/svnroot/jgrapht/trunk</connection>
-	</scm>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License Version 2.1, February 1999</name>
@@ -19,6 +15,23 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	<scm>
+		<url>http://jgrapht.svn.sourceforge.net/svnroot/jgrapht/trunk</url>
+		<connection>scm:svn:https://jgrapht.svn.sourceforge.net/svnroot/jgrapht/trunk</connection>
+	</scm>
+	<issueManagement>
+		<url>http://sourceforge.net/tracker/?group_id=86459</url>
+	</issueManagement>
+	<mailingLists>
+		<mailingList>
+			<name>jgrapht-users</name>
+			<archive>http://lists.sourceforge.net/lists/listinfo/jgrapht-users</archive>
+		</mailingList>
+		<mailingList>
+			<name>jgrapht-announce</name>
+			<archive>http://lists.sourceforge.net/lists/listinfo/jgrapht-announce</archive>
+		</mailingList>
+	</mailingLists>
 	<developers>
 		<developer>
 			<name>John V Sichi</name>
@@ -86,6 +99,7 @@
 			<id>vocaro</id>
 		</developer>
 	</developers>
+		
 	<!--<issueManagement>
 		<url></url>
 	</issueManagement>-->
@@ -131,6 +145,7 @@
 		</plugins>
 		
 	</build>
+	
 	<modules>
 		<module>jgrapht-core</module>
 		<module>jgrapht-ext</module>
