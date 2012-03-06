@@ -18,6 +18,10 @@ git svn clone \
 	#git config user.name poison
 	#git config user.email rc.poison@gmail.com
 	
+	for tag in $(git branch -r | grep tags/ | cut -c 8-); do 
+		git tag $tag tags/$tag
+	done
+	
 	# remove empty commits
 	#git filter-branch --prune-empty -f HEAD
 	
